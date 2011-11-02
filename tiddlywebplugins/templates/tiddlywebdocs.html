@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{ method.path }}</title>
+        <style>
+dt {
+    font: 90% "Andale Mono", "Lucida Console", "Bitstream Vera Sans Mono", "Courier New", monospace;
+}
+
+        </style>
+    </head>
+    <body>
+        <h1>{{ method.path }}</h1>
+        <h2>methods</h2>
+        <dl>
+            {% for request in method.method %}
+            <dt>{{ request }}: {{ method.method[request][0] }}</dt>
+            <dd>{{ method.method[request][1] }}</dd>
+            {% endfor %}
+        </dl>
+        <h2>output serializations</h2>
+        <dl>
+            {% for serializer in outserialization %}
+            <dt><a
+                href="{{ method.cleanpath }}.{{outserialization[serializer]['ext']}}{{ method.query }}">
+                {{ serializer }}</a></dt>
+            <dd>{{ outserialization[serializer]['doc'] }}</dd>
+            {% endfor %}
+        </dl>
+        {% if inserialization %}
+        <h2>input serializations</h2>
+        <dl>
+            {% for serializer in inserialization %}
+            <dt>{{ serializer }}</dt>
+            <dd>{{ inserialization[serializer]['doc'] }}</dd>
+            {% endfor %}
+        </dl>
+        {% endif %}
+    </body>
+</html>

@@ -35,6 +35,8 @@ class Serialization(SerializationInterface):
         self.extensions = {}
         self.serializations = []
         self._build_serializers()
+        if 'tiddlyweb.title' in self.environ:
+            del self.environ['tiddlyweb.title']
 
     # XXX surely I can dry this up?
     def recipe_as(self, recipe):
@@ -56,19 +58,21 @@ class Serialization(SerializationInterface):
         return self._all_info('list_tiddlers')
 
     def _build_serializers(self):
-        try:
-            for extension, mime in (self.environ['tiddlyweb.config']
-                    ['extension_types'].iteritems()):
-                self.extensions[mime] = extension
-            for mime, outputter in (self.environ['tiddlyweb.config']
-                    ['serializers'].iteritems()):
-                module, _ = outputter
-                if module == __name__ or mime == 'default':
-                    continue
+        for extension, mime in (self.environ['tiddlyweb.config']
+                ['extension_types'].iteritems()):
+            self.extensions[mime] = extension
+        for mime, outputter in (self.environ['tiddlyweb.config']
+                ['serializers'].iteritems()):
+            module, _ = outputter
+            if module == __name__ or mime == 'default':
+                continue
+            try:
                 self.serializations.append((self.extensions[mime],
                         Serializer(module, self.environ).serialization))
-        except KeyError:
-            pass
+            except KeyError:
+                # we got a mime type for which there is not an
+                # extension so let's skip it
+                pass
 
     def _matches(self, method):
         matches = []

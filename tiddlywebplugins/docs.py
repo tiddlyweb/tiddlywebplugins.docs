@@ -7,7 +7,7 @@ from tiddlyweb.serializer import (Serializer, NoSerializationError,
 from tiddlyweb.serializations import SerializationInterface
 from tiddlywebplugins.templates import get_template
 
-__version__ = '0.1'
+__version__ = '0.2'
 
 EXTENSION_TYPES = {
         'x-doc': 'text/x-tiddlyweb-docs'

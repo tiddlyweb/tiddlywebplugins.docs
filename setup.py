@@ -2,7 +2,7 @@ AUTHOR = 'Chris Dent'
 AUTHOR_EMAIL = 'cdent@peermore.com'
 NAME = 'tiddlywebplugins.docs'
 DESCRIPTION = 'Automatic HTTP API documentation for TiddlyWeb'
-VERSION = '0.1' # duped from docs.py
+VERSION = '0.2' # duped from docs.py
 
 
 import os
@@ -25,5 +25,6 @@ setup(
     install_requires = ['setuptools',
         'tiddlyweb',
         'tiddlywebplugins.templates'],
+    include_package_data = True,
     zip_safe = False
     )

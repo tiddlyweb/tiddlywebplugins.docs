@@ -8,7 +8,7 @@ from tiddlyweb.serializations import SerializationInterface
 from tiddlywebplugins.templates import get_template
 
 
-__version__ = '0.2'
+__version__ = '0.3'
 
 
 EXTENSION_TYPES = {

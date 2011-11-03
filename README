@@ -1,14 +1,18 @@
 
-A serialization which provides documentation for all the entities
-and serializations available for the current TiddlyWeb instance.
+A serialization which provides documentation of the request methods
+and serializations for all the resources available from the current
+TiddlyWeb instance.
 
 That is: for any existing resource if you get it as text/x-tiddlyweb-docs
 this code will automatically generate documentation about this thing.
 
 So, for example http://example.com/bags/foo/tiddlers.x-doc will
-list the serializations and methods available at that URI.
+list the serializations and HTTP methods available at that URI.
 
 The motivation for this is to cause lack-of-documentation shame.
+
+Install by adding tiddlywebplugins.docs to system_plugins in
+tiddlywebconfig.py.
 
 Copyright 2011 Chris Dent <cdent@peermore.com>
 BSD License

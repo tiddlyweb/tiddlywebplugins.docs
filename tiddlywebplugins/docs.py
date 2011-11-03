@@ -10,11 +10,11 @@ from tiddlywebplugins.templates import get_template
 __version__ = '0.1'
 
 EXTENSION_TYPES = {
-        'x-doc': 'application/x-tiddlyweb-docs'
+        'x-doc': 'text/x-tiddlyweb-docs'
         }
 
 SERIALIZERS = {
-        'application/x-tiddlyweb-docs': ['tiddlywebplugins.docs',
+        'text/x-tiddlyweb-docs': ['tiddlywebplugins.docs',
             'text/html; charset=UTF-8'],
         }
 

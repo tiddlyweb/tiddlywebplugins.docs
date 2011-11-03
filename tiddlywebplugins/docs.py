@@ -7,6 +7,8 @@ from tiddlyweb.serializer import (Serializer, NoSerializationError,
 from tiddlyweb.serializations import SerializationInterface
 from tiddlywebplugins.templates import get_template
 
+__version__ = '0.1'
+
 EXTENSION_TYPES = {
         'x-doc': 'application/x-tiddlyweb-docs'
         }
@@ -24,24 +26,33 @@ def init(config):
 
 
 class Serialization(SerializationInterface):
-    
+
     def __init__(self, environ=None):
         SerializationInterface.__init__(self, environ)
+        self.extensions = {}
+        self.serializations = []
         self._build_serializers()
 
     # XXX surely I can dry this up?
-    def recipe_as(self, recipe): return self._all_info('recipe_as',
-            'as_recipe')
-    def bag_as(self, bag): return self._all_info('bag_as', 'as_bag')
-    def tiddler_as(self, tiddler): return self._all_info('tiddler_as',
-            'as_tiddler')
-    def list_recipes(self, recipes): return self._all_info('list_recipes')
-    def list_bags(self, bags): return self._all_info('list_bags')
-    def list_tiddlers(self, tiddlers): return self._all_info('list_tiddlers')
+    def recipe_as(self, recipe):
+        return self._all_info('recipe_as', 'as_recipe')
+
+    def bag_as(self, bag):
+        return self._all_info('bag_as', 'as_bag')
+
+    def tiddler_as(self, tiddler):
+        return self._all_info('tiddler_as', 'as_tiddler')
+
+    def list_recipes(self, recipes):
+        return self._all_info('list_recipes')
+
+    def list_bags(self, bags):
+        return self._all_info('list_bags')
+
+    def list_tiddlers(self, tiddlers):
+        return self._all_info('list_tiddlers')
 
     def _build_serializers(self):
-        self.extensions = {}
-        self.serializations = []
         try:
             for extension, mime in (self.environ['tiddlyweb.config']
                     ['extension_types'].iteritems()):
@@ -113,6 +124,6 @@ class Serialization(SerializationInterface):
             for method in sorted(methods):
                 handler = selector.select(path, method)[0]
                 info['method'][method] = ('%s:%s' % (handler.__module__,
-                    handler.__name__) , '%s' % handler.__doc__)
+                    handler.__name__), '%s' % handler.__doc__)
 
         return info

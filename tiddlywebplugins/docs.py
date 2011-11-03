@@ -7,11 +7,14 @@ from tiddlyweb.serializer import (Serializer, NoSerializationError,
 from tiddlyweb.serializations import SerializationInterface
 from tiddlywebplugins.templates import get_template
 
+
 __version__ = '0.2'
+
 
 EXTENSION_TYPES = {
         'x-doc': 'text/x-tiddlyweb-docs'
         }
+
 
 SERIALIZERS = {
         'text/x-tiddlyweb-docs': ['tiddlywebplugins.docs',
@@ -60,7 +63,7 @@ class Serialization(SerializationInterface):
             for mime, outputter in (self.environ['tiddlyweb.config']
                     ['serializers'].iteritems()):
                 module, _ = outputter
-                if module == __name__:
+                if module == __name__ or mime == 'default':
                     continue
                 self.serializations.append((self.extensions[mime],
                         Serializer(module, self.environ).serialization))
@@ -109,6 +112,8 @@ class Serialization(SerializationInterface):
     def _method_info(self):
         methods = self.environ.get('selector.methods', [])
         path = self.environ.get('SCRIPT_NAME', 'Unavailable')
+        matched_path = self.environ.get('selector.matches', [path])[0]
+
         selector = self.environ['tiddlyweb.config'].get('selector', None)
         if '.x-doc' in path:
             cleanpath = path.rsplit('.x-doc')[0]
@@ -122,7 +127,7 @@ class Serialization(SerializationInterface):
 
         if selector:
             for method in sorted(methods):
-                handler = selector.select(path, method)[0]
+                handler = selector.select(matched_path, method)[0]
                 info['method'][method] = ('%s:%s' % (handler.__module__,
                     handler.__name__), '%s' % handler.__doc__)
 

@@ -35,8 +35,6 @@ class Serialization(SerializationInterface):
         self.extensions = {}
         self.serializations = []
         self._build_serializers()
-        if 'tiddlyweb.title' in self.environ:
-            del self.environ['tiddlyweb.title']
 
     # XXX surely I can dry this up?
     def recipe_as(self, recipe):
@@ -88,6 +86,10 @@ class Serialization(SerializationInterface):
             in_serialization_info = self._serialization_info(in_method)
         else:
             in_serialization_info = {}
+
+        # Disable HTMLPresenter if it is in the stack.
+        if 'tiddlyweb.title' in self.environ:
+            del self.environ['tiddlyweb.title']
 
         template = get_template(self.environ, 'tiddlywebdocs.html')
         return template.generate({'outserialization': out_serialization_info,

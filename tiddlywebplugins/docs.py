@@ -7,6 +7,8 @@ from tiddlyweb.serializer import (Serializer, NoSerializationError,
 from tiddlyweb.serializations import SerializationInterface
 from tiddlywebplugins.templates import get_template
 
+import urllib
+
 
 __version__ = '0.4'
 
@@ -128,7 +130,9 @@ class Serialization(SerializationInterface):
         query_string = self.environ.get('QUERY_STRING', '')
         if query_string:
             query_string = '?%s' % query_string
-        info = {'path': path, 'cleanpath': cleanpath, 'method': {},
+        info = {'path': path.decode('utf-8'),
+                'cleanpath': urllib.quote(cleanpath),
+                'method': {},
                 'query': query_string}
 
         if selector:

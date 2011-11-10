@@ -10,7 +10,7 @@ from tiddlywebplugins.templates import get_template
 import urllib
 
 
-__version__ = '0.4'
+__version__ = '0.5'
 
 
 EXTENSION_TYPES = {
